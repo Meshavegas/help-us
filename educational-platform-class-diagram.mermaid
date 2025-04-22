@@ -1,0 +1,189 @@
+classDiagram
+    %% Base User class
+    class User {
+        +int id
+        +String username
+        +String password
+        +String email
+        +String phoneNumber
+        +Date createdAt
+        +login()
+        +logout()
+        +updateProfile()
+        +manageContacts()
+    }
+
+    %% Actor classes
+    class Famille {
+        +String familyName
+        +consultTeachers()
+        +planNextSession()
+        +viewPayments()
+        +stopMission()
+        +viewCourses()
+        +viewAdvances()
+        +accessResources()
+        +provideReviews()
+        +searchTeachers(criteria)
+        +selectTeacher()
+        +validateSession()
+        +declineSession()
+    }
+
+    class Enseignant {
+        +String specialization
+        +String qualifications
+        +completeProfile()
+        +viewOffers()
+        +reserveOption()
+        +planCourses()
+        +declareSession()
+        +viewPayments()
+        +provideReport()
+        +stopMission()
+        +viewStudents()
+        +viewAdvances()
+        +accessDocuments()
+        +accessVideos()
+        +viewRoute()
+        +declareHours()
+        +selectStudent()
+    }
+
+    class Administrator {
+        +manageAccount()
+        +manageStudents()
+        +manageTeachers()
+        +manageOffers()
+        +consultReports()
+        +validateReports()
+        +viewPayments()
+        +editProfiles()
+        +provideSupport()
+    }
+
+    %% Domain classes
+    class Course {
+        +int id
+        +DateTime scheduledTime
+        +int duration
+        +String location
+        +String status
+        +schedule()
+        +cancel()
+        +validate()
+        +declare()
+    }
+
+    class Payment {
+        +int id
+        +float amount
+        +Date paymentDate
+        +String status
+        +String type
+        +processPayment()
+        +generateInvoice()
+        +viewHistory()
+    }
+
+    class Mission {
+        +int id
+        +Date startDate
+        +Date endDate
+        +String status
+        +String description
+        +createMission()
+        +stopMission()
+        +extendMission()
+    }
+
+    class Report {
+        +int id
+        +Date submissionDate
+        +String content
+        +String status
+        +submitReport()
+        +validateReport()
+        +viewReport()
+    }
+
+    class Offer {
+        +int id
+        +String title
+        +String description
+        +float hourlyRate
+        +Date publicationDate
+        +String status
+        +createOffer()
+        +applyForOffer()
+        +closeOffer()
+    }
+
+    class Resource {
+        +int id
+        +String title
+        +String type
+        +String url
+        +Date uploadDate
+        +uploadResource()
+        +downloadResource()
+        +accessResource()
+    }
+
+    class Option {
+        +int id
+        +Date creationDate
+        +Date expirationDate
+        +String status
+        +createOption()
+        +cancelOption()
+        +acceptOption()
+    }
+
+    class Address {
+        +int id
+        +String street
+        +String city
+        +String postalCode
+        +String country
+        +float latitude
+        +float longitude
+        +addAddress()
+        +updateAddress()
+        +calculateRoute()
+    }
+
+    %% Relationships
+    User <|-- Famille : inheritance
+    User <|-- Enseignant : inheritance
+    User <|-- Administrator : inheritance
+    
+    Famille "1" -- "0..*" Enseignant : hires
+    Enseignant "1" -- "0..*" Famille : teaches for
+    
+    Famille "1" -- "0..*" Course : schedules
+    Enseignant "1" -- "0..*" Course : conducts
+    
+    Mission "1" -- "1..*" Course : contains
+    Famille "1" -- "0..*" Mission : initiates
+    Enseignant "1" -- "0..*" Mission : fulfills
+    
+    Enseignant "1" -- "0..*" Report : submits
+    Administrator "1" -- "0..*" Report : validates
+    Mission "1" -- "0..*" Report : documents
+    
+    Administrator "1" -- "0..*" Offer : creates
+    Enseignant "0..*" -- "0..*" Offer : applies to
+    
+    User "1" -- "0..*" Payment : receives/makes
+    Course "1" -- "0..*" Payment : generates
+    
+    User "1" -- "0..*" Address : has
+    Course "1" -- "1" Address : located at
+    
+    Enseignant "1" -- "0..*" Option : creates
+    Famille "1" -- "0..*" Option : receives
+    Offer "1" -- "0..*" Option : results in
+    
+    User "1" -- "0..*" Resource : accesses
+    Administrator "1" -- "0..*" Resource : manages

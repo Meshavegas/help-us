@@ -26,6 +26,7 @@ Ce projet modélise une plateforme de gestion et de mise en relation entre famil
 - Les paiements sont associés aux utilisateurs et aux cours.
 - Les ressources sont accessibles par les utilisateurs et gérées par les administrateurs.
 - Les adresses sont liées aux utilisateurs et aux lieux de cours.
+  ![Class Diagram](https://www.mermaidchart.com/raw/5c8cf39f-38b7-4d81-a99e-7e0e244be859?theme=light&version=v0.1&format=svg)
 
 ### Comprehensive API Endpoints for Educational Platform
 

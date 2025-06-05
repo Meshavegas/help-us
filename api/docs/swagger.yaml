@@ -1,0 +1,752 @@
+basePath: /api/v1
+definitions:
+  controllers.AuthResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  controllers.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  controllers.RegisterRequest:
+    properties:
+      email:
+        type: string
+      family_name:
+        description: Pour les familles
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone_number:
+        type: string
+      qualifications:
+        description: Pour les enseignants
+        type: string
+      role:
+        $ref: '#/definitions/models.UserRole'
+      specialization:
+        description: Pour les enseignants
+        type: string
+      username:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    - role
+    - username
+    type: object
+  models.Address:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      created_at:
+        type: string
+      id:
+        type: integer
+      latitude:
+        type: number
+      longitude:
+        type: number
+      postal_code:
+        type: string
+      street:
+        type: string
+      updated_at:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relationships
+      user_id:
+        description: Foreign Key
+        type: integer
+    type: object
+  models.Administrator:
+    properties:
+      created_offers:
+        items:
+          $ref: '#/definitions/models.Offer'
+        type: array
+      managed_resources:
+        items:
+          $ref: '#/definitions/models.Resource'
+        type: array
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relationships
+      user_id:
+        type: integer
+      validated_reports:
+        items:
+          $ref: '#/definitions/models.Report'
+        type: array
+    type: object
+  models.Course:
+    properties:
+      address:
+        $ref: '#/definitions/models.Address'
+      address_id:
+        type: integer
+      created_at:
+        type: string
+      duration:
+        description: Duration in minutes
+        type: integer
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      enseignant_id:
+        type: integer
+      famille:
+        allOf:
+        - $ref: '#/definitions/models.Famille'
+        description: Relationships
+      famille_id:
+        description: Foreign Keys
+        type: integer
+      id:
+        type: integer
+      location:
+        type: string
+      mission:
+        $ref: '#/definitions/models.Mission'
+      mission_id:
+        type: integer
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      scheduled_time:
+        type: string
+      status:
+        $ref: '#/definitions/models.CourseStatus'
+      updated_at:
+        type: string
+    type: object
+  models.CourseStatus:
+    enum:
+    - scheduled
+    - completed
+    - cancelled
+    - in_progress
+    type: string
+    x-enum-varnames:
+    - CourseStatusScheduled
+    - CourseStatusCompleted
+    - CourseStatusCancelled
+    - CourseStatusInProgress
+  models.Enseignant:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      missions:
+        items:
+          $ref: '#/definitions/models.Mission'
+        type: array
+      offers:
+        items:
+          $ref: '#/definitions/models.Offer'
+        type: array
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      qualifications:
+        type: string
+      reports:
+        items:
+          $ref: '#/definitions/models.Report'
+        type: array
+      specialization:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relationships
+      user_id:
+        type: integer
+    type: object
+  models.Famille:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      family_name:
+        type: string
+      missions:
+        items:
+          $ref: '#/definitions/models.Mission'
+        type: array
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relationships
+      user_id:
+        type: integer
+    type: object
+  models.Mission:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      created_at:
+        type: string
+      description:
+        type: string
+      end_date:
+        type: string
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      enseignant_id:
+        type: integer
+      famille:
+        allOf:
+        - $ref: '#/definitions/models.Famille'
+        description: Relationships
+      famille_id:
+        description: Foreign Keys
+        type: integer
+      id:
+        type: integer
+      reports:
+        items:
+          $ref: '#/definitions/models.Report'
+        type: array
+      start_date:
+        type: string
+      status:
+        $ref: '#/definitions/models.MissionStatus'
+      updated_at:
+        type: string
+    type: object
+  models.MissionStatus:
+    enum:
+    - active
+    - completed
+    - stopped
+    - paused
+    type: string
+    x-enum-varnames:
+    - MissionStatusActive
+    - MissionStatusCompleted
+    - MissionStatusStopped
+    - MissionStatusPaused
+  models.Offer:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/models.Administrator'
+        description: Relationships
+      created_by_id:
+        description: Foreign Keys
+        type: integer
+      description:
+        type: string
+      enseignants:
+        items:
+          $ref: '#/definitions/models.Enseignant'
+        type: array
+      hourly_rate:
+        type: number
+      id:
+        type: integer
+      level:
+        type: string
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      publication_date:
+        type: string
+      requirements:
+        type: string
+      status:
+        $ref: '#/definitions/models.OfferStatus'
+      subject:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.OfferStatus:
+    enum:
+    - open
+    - closed
+    - filled
+    - draft
+    type: string
+    x-enum-varnames:
+    - OfferStatusOpen
+    - OfferStatusClosed
+    - OfferStatusFilled
+    - OfferStatusDraft
+  models.Option:
+    properties:
+      created_at:
+        type: string
+      creation_date:
+        type: string
+      description:
+        type: string
+      enseignant:
+        allOf:
+        - $ref: '#/definitions/models.Enseignant'
+        description: Relationships
+      enseignant_id:
+        description: Foreign Keys
+        type: integer
+      expiration_date:
+        type: string
+      famille:
+        $ref: '#/definitions/models.Famille'
+      famille_id:
+        type: integer
+      id:
+        type: integer
+      offer:
+        $ref: '#/definitions/models.Offer'
+      offer_id:
+        type: integer
+      status:
+        $ref: '#/definitions/models.OptionStatus'
+      updated_at:
+        type: string
+    type: object
+  models.OptionStatus:
+    enum:
+    - active
+    - expired
+    - accepted
+    - cancelled
+    type: string
+    x-enum-varnames:
+    - OptionStatusActive
+    - OptionStatusExpired
+    - OptionStatusAccepted
+    - OptionStatusCancelled
+  models.Payment:
+    properties:
+      amount:
+        type: number
+      course:
+        $ref: '#/definitions/models.Course'
+      course_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      payment_date:
+        type: string
+      status:
+        $ref: '#/definitions/models.PaymentStatus'
+      type:
+        $ref: '#/definitions/models.PaymentType'
+      updated_at:
+        type: string
+      user:
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: Relationships
+      user_id:
+        description: Foreign Keys
+        type: integer
+    type: object
+  models.PaymentStatus:
+    enum:
+    - pending
+    - completed
+    - failed
+    - refunded
+    type: string
+    x-enum-varnames:
+    - PaymentStatusPending
+    - PaymentStatusCompleted
+    - PaymentStatusFailed
+    - PaymentStatusRefunded
+  models.PaymentType:
+    enum:
+    - course
+    - mission
+    - advance
+    - refund
+    type: string
+    x-enum-varnames:
+    - PaymentTypeCourse
+    - PaymentTypeMission
+    - PaymentTypeAdvance
+    - PaymentTypeRefund
+  models.Report:
+    properties:
+      comments:
+        type: string
+      content:
+        type: string
+      created_at:
+        type: string
+      enseignant:
+        allOf:
+        - $ref: '#/definitions/models.Enseignant'
+        description: Relationships
+      enseignant_id:
+        description: Foreign Keys
+        type: integer
+      id:
+        type: integer
+      mission:
+        $ref: '#/definitions/models.Mission'
+      mission_id:
+        type: integer
+      status:
+        $ref: '#/definitions/models.ReportStatus'
+      submission_date:
+        type: string
+      updated_at:
+        type: string
+      validated_by:
+        $ref: '#/definitions/models.Administrator'
+      validated_by_id:
+        type: integer
+      validation_date:
+        type: string
+    type: object
+  models.ReportStatus:
+    enum:
+    - submitted
+    - validated
+    - rejected
+    - pending
+    type: string
+    x-enum-varnames:
+    - ReportStatusSubmitted
+    - ReportStatusValidated
+    - ReportStatusRejected
+    - ReportStatusPending
+  models.Resource:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      file_size:
+        description: Size in bytes
+        type: integer
+      id:
+        type: integer
+      is_public:
+        type: boolean
+      managed_by:
+        allOf:
+        - $ref: '#/definitions/models.Administrator'
+        description: Relationships
+      managed_by_id:
+        description: Foreign Keys
+        type: integer
+      mime_type:
+        type: string
+      title:
+        type: string
+      type:
+        $ref: '#/definitions/models.ResourceType'
+      updated_at:
+        type: string
+      upload_date:
+        type: string
+      url:
+        type: string
+      users:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
+  models.ResourceType:
+    enum:
+    - document
+    - video
+    - audio
+    - image
+    - link
+    type: string
+    x-enum-varnames:
+    - ResourceTypeDocument
+    - ResourceTypeVideo
+    - ResourceTypeAudio
+    - ResourceTypeImage
+    - ResourceTypeLink
+  models.User:
+    properties:
+      addresses:
+        description: Relationships
+        items:
+          $ref: '#/definitions/models.Address'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      phone_number:
+        type: string
+      resources:
+        items:
+          $ref: '#/definitions/models.Resource'
+        type: array
+      role:
+        $ref: '#/definitions/models.UserRole'
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserRole:
+    enum:
+    - famille
+    - enseignant
+    - administrator
+    type: string
+    x-enum-varnames:
+    - RoleFamille
+    - RoleEnseignant
+    - RoleAdministrator
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: Support API
+    url: http://www.swagger.io/support
+  description: API REST complète pour la gestion d'une plateforme éducative avec familles,
+    enseignants et administrateurs
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: API REST Go - Plateforme Éducative
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authentifier un utilisateur et retourner un token JWT
+      parameters:
+      - description: Identifiants de connexion
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Connexion réussie
+          schema:
+            $ref: '#/definitions/controllers.AuthResponse'
+        "400":
+          description: Erreur de validation
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Identifiants incorrects
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Connexion d'un utilisateur
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Déconnecter l'utilisateur (invalide le token côté client)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Déconnexion réussie
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Déconnexion
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Générer un nouveau token JWT à partir d'un token existant
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Nouveau token généré
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Token invalide
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Rafraîchir le token JWT
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Créer un nouveau compte utilisateur
+      parameters:
+      - description: Données d'inscription
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Utilisateur créé avec succès
+          schema:
+            $ref: '#/definitions/controllers.AuthResponse'
+        "400":
+          description: Erreur de validation
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Utilisateur déjà existant
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Inscription d'un utilisateur
+      tags:
+      - auth
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Vérifie l'état de l'API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API fonctionnelle
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Vérification de santé
+      tags:
+      - health
+  /profile:
+    get:
+      consumes:
+      - application/json
+      description: Obtenir les informations du profil de l'utilisateur connecté
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Profil utilisateur
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Récupérer le profil utilisateur
+      tags:
+      - profile
+    put:
+      consumes:
+      - application/json
+      description: Modifier les informations du profil de l'utilisateur connecté
+      parameters:
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Profil mis à jour
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Erreur de validation
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mettre à jour le profil utilisateur
+      tags:
+      - profile
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

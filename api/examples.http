@@ -1,0 +1,92 @@
+### Test de santé
+GET http://localhost:8080/health
+
+### Inscription d'un utilisateur
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "username": "johndoe",
+  "password": "password123",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+
+### Connexion
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+### Obtenir le profil (remplacer TOKEN)
+GET http://localhost:8080/api/v1/profile
+Authorization: Bearer TOKEN
+
+### Lister tous les utilisateurs
+GET http://localhost:8080/api/v1/users
+Authorization: Bearer TOKEN
+
+### Créer une tâche
+POST http://localhost:8080/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "title": "Terminer le projet API",
+  "description": "Finaliser l'API REST avec toutes les fonctionnalités",
+  "priority": "high",
+  "due_date": "2024-12-31T23:59:59Z"
+}
+
+### Lister les tâches
+GET http://localhost:8080/api/v1/tasks
+Authorization: Bearer TOKEN
+
+### Lister les tâches avec filtres
+GET http://localhost:8080/api/v1/tasks?status=pending&priority=high
+Authorization: Bearer TOKEN
+
+### Obtenir une tâche spécifique
+GET http://localhost:8080/api/v1/tasks/1
+Authorization: Bearer TOKEN
+
+### Mettre à jour une tâche
+PUT http://localhost:8080/api/v1/tasks/1
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "status": "in_progress",
+  "description": "Tâche en cours de réalisation"
+}
+
+### Marquer une tâche comme terminée
+PUT http://localhost:8080/api/v1/tasks/1
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "status": "completed"
+}
+
+### Obtenir les statistiques des tâches
+GET http://localhost:8080/api/v1/tasks/stats
+Authorization: Bearer TOKEN
+
+### Supprimer une tâche
+DELETE http://localhost:8080/api/v1/tasks/1
+Authorization: Bearer TOKEN
+
+### Mettre à jour le profil utilisateur
+PUT http://localhost:8080/api/v1/users/1
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "first_name": "Jean",
+  "last_name": "Dupont"
+} 

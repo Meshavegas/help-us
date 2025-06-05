@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { auth, signOut } from '@/lib/auth';
+import { getCurrentUser, signOut } from '@/lib/auth';
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -10,10 +10,16 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export async function User() {
-  let session = await auth();
-  let user = session?.user;
+  const user = await getCurrentUser();
+
+  const handleSignOut = async () => {
+    'use server';
+    await signOut();
+    redirect('/login');
+  };
 
   return (
     <DropdownMenu>
@@ -24,7 +30,7 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={user?.image ?? '/placeholder-user.jpg'}
+            src="/placeholder-user.jpg"
             width={36}
             height={36}
             alt="Avatar"
@@ -33,25 +39,20 @@ export async function User() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>Paramètres</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
         {user ? (
           <DropdownMenuItem>
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
-            >
-              <button type="submit">Sign Out</button>
+            <form action={handleSignOut}>
+              <button type="submit">Déconnexion</button>
             </form>
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem>
-            <Link href="/login">Sign In</Link>
+            <Link href="/login">Se connecter</Link>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

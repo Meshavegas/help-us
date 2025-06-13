@@ -62,7 +62,6 @@ Based on the class diagram, here's a complete list of API endpoints that would c
 | ------ | ---------------------------- | ----------------------------------------- |
 | GET    | `/api/familles`              | List all families (admin only)            |
 | GET    | `/api/familles/:id`          | Get a specific family's details           |
-| POST   | `/api/familles`              | Create a new family profile               |
 | PUT    | `/api/familles/:id`          | Update a family's details                 |
 | DELETE | `/api/familles/:id`          | Delete a family profile                   |
 | GET    | `/api/familles/:id/teachers` | Get all teachers working with this family |

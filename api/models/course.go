@@ -84,3 +84,11 @@ type CourseFilterRequest struct {
 	DateFrom     *time.Time   `json:"date_from,omitempty"`
 	DateTo       *time.Time   `json:"date_to,omitempty"`
 }
+
+// CourseScheduleRequest représente les données nécessaires pour planifier un cours
+type CourseScheduleRequest struct {
+	ScheduledTime time.Time `json:"scheduled_time" binding:"required"`
+	Duration      int       `json:"duration" binding:"required,min=30,max=480"`
+	Location      string    `json:"location" binding:"required"`
+	AddressID     uint      `json:"address_id" binding:"required"`
+}

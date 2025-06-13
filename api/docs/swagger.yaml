@@ -7,6 +7,143 @@ definitions:
       user:
         $ref: '#/definitions/models.User'
     type: object
+  controllers.CourseResponse:
+    properties:
+      address:
+        $ref: '#/definitions/models.Address'
+      address_id:
+        type: integer
+      created_at:
+        type: string
+      duration:
+        description: Duration in minutes
+        type: integer
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      enseignant_id:
+        type: integer
+      famille:
+        allOf:
+        - $ref: '#/definitions/models.Famille'
+        description: Relationships
+      famille_id:
+        description: Foreign Keys
+        type: integer
+      id:
+        type: integer
+      location:
+        type: string
+      mission:
+        $ref: '#/definitions/models.Mission'
+      mission_id:
+        type: integer
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      scheduled_time:
+        type: string
+      status:
+        $ref: '#/definitions/models.CourseStatus'
+      updated_at:
+        type: string
+    type: object
+  controllers.EnseignantResponse:
+    properties:
+      addresses:
+        description: Relationships
+        items:
+          $ref: '#/definitions/models.Address'
+        type: array
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      missions:
+        items:
+          $ref: '#/definitions/models.Mission'
+        type: array
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      phone_number:
+        type: string
+      reports:
+        items:
+          $ref: '#/definitions/models.Report'
+        type: array
+      resources:
+        items:
+          $ref: '#/definitions/models.Resource'
+        type: array
+      role:
+        $ref: '#/definitions/models.UserRole'
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  controllers.FamilleResponse:
+    properties:
+      addresses:
+        description: Relationships
+        items:
+          $ref: '#/definitions/models.Address'
+        type: array
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      famille:
+        $ref: '#/definitions/models.Famille'
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      missions:
+        items:
+          $ref: '#/definitions/models.Mission'
+        type: array
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      phone_number:
+        type: string
+      resources:
+        items:
+          $ref: '#/definitions/models.Resource'
+        type: array
+      role:
+        $ref: '#/definitions/models.UserRole'
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
   controllers.LoginRequest:
     properties:
       email:
@@ -16,6 +153,86 @@ definitions:
     required:
     - email
     - password
+    type: object
+  controllers.MissionResponse:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/models.Course'
+        type: array
+      created_at:
+        type: string
+      description:
+        type: string
+      end_date:
+        type: string
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      enseignant_id:
+        type: integer
+      famille:
+        allOf:
+        - $ref: '#/definitions/models.Famille'
+        description: Relationships
+      famille_id:
+        description: Foreign Keys
+        type: integer
+      id:
+        type: integer
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      reports:
+        items:
+          $ref: '#/definitions/models.Report'
+        type: array
+      start_date:
+        type: string
+      status:
+        $ref: '#/definitions/models.MissionStatus'
+      updated_at:
+        type: string
+    type: object
+  controllers.OfferResponse:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/models.Administrator'
+        description: Relationships
+      created_by_id:
+        description: Foreign Keys
+        type: integer
+      description:
+        type: string
+      enseignants:
+        items:
+          $ref: '#/definitions/models.Enseignant'
+        type: array
+      hourly_rate:
+        type: number
+      id:
+        type: integer
+      level:
+        type: string
+      options:
+        items:
+          $ref: '#/definitions/models.Option'
+        type: array
+      publication_date:
+        type: string
+      requirements:
+        type: string
+      status:
+        $ref: '#/definitions/models.OfferStatus'
+      subject:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
     type: object
   controllers.RegisterRequest:
     properties:
@@ -46,6 +263,44 @@ definitions:
     - password
     - role
     - username
+    type: object
+  controllers.UserResponse:
+    properties:
+      addresses:
+        description: Relationships
+        items:
+          $ref: '#/definitions/models.Address'
+        type: array
+      administrator:
+        $ref: '#/definitions/models.Administrator'
+      created_at:
+        type: string
+      email:
+        type: string
+      enseignant:
+        $ref: '#/definitions/models.Enseignant'
+      famille:
+        $ref: '#/definitions/models.Famille'
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      payments:
+        items:
+          $ref: '#/definitions/models.Payment'
+        type: array
+      phone_number:
+        type: string
+      resources:
+        items:
+          $ref: '#/definitions/models.Resource'
+        type: array
+      role:
+        $ref: '#/definitions/models.UserRole'
+      updated_at:
+        type: string
+      username:
+        type: string
     type: object
   models.Address:
     properties:
@@ -141,6 +396,46 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.CourseCreateRequest:
+    properties:
+      address_id:
+        type: integer
+      duration:
+        description: 30 min to 8 hours
+        maximum: 480
+        minimum: 30
+        type: integer
+      enseignant_id:
+        type: integer
+      location:
+        type: string
+      scheduled_time:
+        type: string
+    required:
+    - address_id
+    - duration
+    - enseignant_id
+    - location
+    - scheduled_time
+    type: object
+  models.CourseScheduleRequest:
+    properties:
+      address_id:
+        type: integer
+      duration:
+        maximum: 480
+        minimum: 30
+        type: integer
+      location:
+        type: string
+      scheduled_time:
+        type: string
+    required:
+    - address_id
+    - duration
+    - location
+    - scheduled_time
+    type: object
   models.CourseStatus:
     enum:
     - scheduled
@@ -153,6 +448,17 @@ definitions:
     - CourseStatusCompleted
     - CourseStatusCancelled
     - CourseStatusInProgress
+  models.CourseUpdateRequest:
+    properties:
+      duration:
+        type: integer
+      location:
+        type: string
+      scheduled_time:
+        type: string
+      status:
+        $ref: '#/definitions/models.CourseStatus'
+    type: object
   models.Enseignant:
     properties:
       courses:
@@ -245,6 +551,20 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.MissionCreateRequest:
+    properties:
+      description:
+        type: string
+      end_date:
+        type: string
+      enseignant_id:
+        type: integer
+      start_date:
+        type: string
+    required:
+    - enseignant_id
+    - start_date
+    type: object
   models.MissionStatus:
     enum:
     - active
@@ -257,6 +577,15 @@ definitions:
     - MissionStatusCompleted
     - MissionStatusStopped
     - MissionStatusPaused
+  models.MissionUpdateRequest:
+    properties:
+      description:
+        type: string
+      end_date:
+        type: string
+      status:
+        $ref: '#/definitions/models.MissionStatus'
+    type: object
   models.Offer:
     properties:
       created_at:
@@ -297,6 +626,28 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.OfferCreateRequest:
+    properties:
+      description:
+        type: string
+      hourly_rate:
+        minimum: 0
+        type: number
+      level:
+        type: string
+      requirements:
+        type: string
+      subject:
+        type: string
+      title:
+        type: string
+    required:
+    - description
+    - hourly_rate
+    - level
+    - subject
+    - title
+    type: object
   models.OfferStatus:
     enum:
     - open
@@ -309,6 +660,23 @@ definitions:
     - OfferStatusClosed
     - OfferStatusFilled
     - OfferStatusDraft
+  models.OfferUpdateRequest:
+    properties:
+      description:
+        type: string
+      hourly_rate:
+        type: number
+      level:
+        type: string
+      requirements:
+        type: string
+      status:
+        $ref: '#/definitions/models.OfferStatus'
+      subject:
+        type: string
+      title:
+        type: string
+    type: object
   models.Option:
     properties:
       created_at:
@@ -536,6 +904,36 @@ definitions:
       username:
         type: string
     type: object
+  models.UserCreateRequest:
+    properties:
+      email:
+        type: string
+      family_name:
+        description: For Famille
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone_number:
+        type: string
+      qualifications:
+        description: For Enseignant
+        type: string
+      role:
+        $ref: '#/definitions/models.UserRole'
+      specialization:
+        description: For Enseignant
+        type: string
+      username:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    - role
+    - username
+    type: object
   models.UserRole:
     enum:
     - famille
@@ -546,6 +944,21 @@ definitions:
     - RoleFamille
     - RoleEnseignant
     - RoleAdministrator
+  models.UserUpdateRequest:
+    properties:
+      email:
+        type: string
+      family_name:
+        type: string
+      phone_number:
+        type: string
+      qualifications:
+        type: string
+      specialization:
+        type: string
+      username:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -561,6 +974,1885 @@ info:
   title: API REST Go - Plateforme Éducative
   version: "1.0"
 paths:
+  /api/users:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste de tous les utilisateurs (admin seulement)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Liste des utilisateurs
+          schema:
+            items:
+              $ref: '#/definitions/controllers.UserResponse'
+            type: array
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Accès refusé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste tous les utilisateurs
+      tags:
+      - users
+  /api/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime un utilisateur du système (admin seulement)
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Utilisateur supprimé
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: ID invalide
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Accès refusé
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Supprime un utilisateur
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Obtient les détails d'un utilisateur spécifique
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Détails de l'utilisateur
+          schema:
+            $ref: '#/definitions/controllers.UserResponse'
+        "400":
+          description: ID invalide
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Récupère un utilisateur par ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Met à jour les informations d'un utilisateur (admin seulement)
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Utilisateur mis à jour
+          schema:
+            $ref: '#/definitions/controllers.UserResponse'
+        "400":
+          description: Erreur de validation
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Accès refusé
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Met à jour un utilisateur
+      tags:
+      - users
+  /api/users/{id}/addresses:
+    get:
+      consumes:
+      - application/json
+      description: Obtient toutes les adresses associées à un utilisateur
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Liste des adresses
+          schema:
+            items:
+              $ref: '#/definitions/models.Address'
+            type: array
+        "400":
+          description: ID invalide
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Récupère les adresses d'un utilisateur
+      tags:
+      - users
+  /api/users/{id}/payments:
+    get:
+      consumes:
+      - application/json
+      description: Obtient tous les paiements associés à un utilisateur
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Liste des paiements
+          schema:
+            items:
+              $ref: '#/definitions/models.Payment'
+            type: array
+        "400":
+          description: ID invalide
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Récupère les paiements d'un utilisateur
+      tags:
+      - users
+  /api/users/{id}/resources:
+    get:
+      consumes:
+      - application/json
+      description: Obtient toutes les ressources accessibles à un utilisateur
+      parameters:
+      - description: ID de l'utilisateur
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Liste des ressources
+          schema:
+            items:
+              $ref: '#/definitions/models.Resource'
+            type: array
+        "400":
+          description: ID invalide
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Non authentifié
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Utilisateur non trouvé
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Récupère les ressources d'un utilisateur
+      tags:
+      - users
+  /api/v1/courses:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des cours avec possibilité de filtrage par statut,
+        enseignant, famille ou mission
+      parameters:
+      - description: Statut du cours
+        in: query
+        name: status
+        type: string
+      - description: ID de l'enseignant
+        in: query
+        name: enseignant_id
+        type: integer
+      - description: ID de la famille
+        in: query
+        name: famille_id
+        type: integer
+      - description: ID de la mission
+        in: query
+        name: mission_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.CourseResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste tous les cours
+      tags:
+      - courses
+    post:
+      consumes:
+      - application/json
+      description: Crée un nouveau cours
+      parameters:
+      - description: Données du cours
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CourseCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Création d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime un cours existant
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Suppression d'un cours
+      tags:
+      - courses
+    get:
+      consumes:
+      - application/json
+      description: Récupère les détails d'un cours spécifique
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Détails d'un cours
+      tags:
+      - courses
+    put:
+      consumes:
+      - application/json
+      description: Met à jour les informations d'un cours existant
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CourseUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mise à jour d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}/cancel:
+    put:
+      consumes:
+      - application/json
+      description: Annule un cours planifié
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Annulation d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}/complete:
+    put:
+      consumes:
+      - application/json
+      description: Marque un cours comme terminé
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Validation d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}/declare:
+    post:
+      consumes:
+      - application/json
+      description: Déclare les heures effectuées pour un cours
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Heures effectuées
+        in: body
+        name: request
+        required: true
+        schema:
+          additionalProperties:
+            type: number
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Déclaration des heures d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}/payments:
+    get:
+      consumes:
+      - application/json
+      description: Récupère tous les paiements associés à un cours
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Payment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des paiements d'un cours
+      tags:
+      - courses
+  /api/v1/courses/{id}/schedule:
+    put:
+      consumes:
+      - application/json
+      description: Planifie un cours à une date spécifique
+      parameters:
+      - description: ID du cours
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de planification
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CourseScheduleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Planification d'un cours
+      tags:
+      - courses
+  /api/v1/enseignants:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste de tous les enseignants
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.EnseignantResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste tous les enseignants
+      tags:
+      - enseignants
+    post:
+      consumes:
+      - application/json
+      description: Crée un nouveau compte enseignant (admin seulement)
+      parameters:
+      - description: Données de l'enseignant
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controllers.EnseignantResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Création d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime un compte enseignant (admin seulement)
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Suppression d'un enseignant
+      tags:
+      - enseignants
+    get:
+      consumes:
+      - application/json
+      description: Récupère les détails d'un enseignant spécifique
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.EnseignantResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Détails d'un enseignant
+      tags:
+      - enseignants
+    put:
+      consumes:
+      - application/json
+      description: Met à jour les informations d'un enseignant (admin ou propriétaire)
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mise à jour d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/courses:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des cours associés à un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Course'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des cours d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/missions:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des missions associées à un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Mission'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des missions d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/options:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des options associées à un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Option'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des options d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/payments:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des paiements associés à un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Payment'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des paiements d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/reports:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des rapports soumis par un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Report'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des rapports d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/{id}/students:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des élèves associés à un enseignant
+      parameters:
+      - description: ID de l'enseignant
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des élèves d'un enseignant
+      tags:
+      - enseignants
+  /api/v1/enseignants/nearby:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des enseignants proches d'une localisation donnée
+      parameters:
+      - description: Latitude
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: Longitude
+        in: query
+        name: lng
+        required: true
+        type: number
+      - description: Rayon de recherche en km
+        in: query
+        name: radius
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.EnseignantResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des enseignants à proximité
+      tags:
+      - enseignants
+  /api/v1/familles:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste de toutes les familles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.FamilleResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste toutes les familles
+      tags:
+      - familles
+  /api/v1/familles/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime un compte famille (admin seulement)
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Suppression d'une famille
+      tags:
+      - familles
+    get:
+      consumes:
+      - application/json
+      description: Récupère les détails d'une famille spécifique
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.FamilleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Détails d'une famille
+      tags:
+      - familles
+    put:
+      consumes:
+      - application/json
+      description: Met à jour les informations d'une famille (admin ou propriétaire)
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mise à jour d'une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/courses:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des cours associés à une famille
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Course'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des cours d'une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/missions:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des missions associées à une famille
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Mission'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des missions d'une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/options:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des options associées à une famille
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Option'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des options d'une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/payments:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des paiements associés à une famille
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Payment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des paiements d'une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/reviews:
+    post:
+      consumes:
+      - application/json
+      description: Ajoute un avis sur une famille (non implémenté)
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de l'avis
+        in: body
+        name: review
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Ajouter un avis sur une famille
+      tags:
+      - familles
+  /api/v1/familles/{id}/teachers:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des enseignants associés à une famille
+      parameters:
+      - description: ID de la famille
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Liste des enseignants d'une famille
+      tags:
+      - familles
+  /api/v1/missions:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des missions avec possibilité de filtrage par
+        statut, enseignant ou famille
+      parameters:
+      - description: Statut de la mission
+        in: query
+        name: status
+        type: string
+      - description: ID de l'enseignant
+        in: query
+        name: enseignant_id
+        type: integer
+      - description: ID de la famille
+        in: query
+        name: famille_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.MissionResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste toutes les missions
+      tags:
+      - missions
+    post:
+      consumes:
+      - application/json
+      description: Crée une nouvelle mission
+      parameters:
+      - description: Données de la mission
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.MissionCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controllers.MissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Création d'une mission
+      tags:
+      - missions
+  /api/v1/missions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime une mission existante
+      parameters:
+      - description: ID de la mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Suppression d'une mission
+      tags:
+      - missions
+    get:
+      consumes:
+      - application/json
+      description: Récupère les détails d'une mission spécifique
+      parameters:
+      - description: ID de la mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.MissionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Détails d'une mission
+      tags:
+      - missions
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Champs à mettre à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.MissionUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.MissionResponse'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mise à jour d'une mission
+      tags:
+      - missions
+  /api/v1/missions/{id}/courses:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des cours associés à une mission
+      parameters:
+      - description: ID de la mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Course'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des cours d'une mission
+      tags:
+      - missions
+  /api/v1/missions/{id}/payments:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des paiements associés à une mission
+      parameters:
+      - description: ID de la mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Payment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des paiements d'une mission
+      tags:
+      - missions
+  /api/v1/missions/{id}/reports:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des rapports associés à une mission
+      parameters:
+      - description: ID de la mission
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Report'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des rapports d'une mission
+      tags:
+      - missions
+  /api/v1/offers:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des offres avec possibilité de filtrage par statut,
+        sujet et niveau
+      parameters:
+      - description: Statut de l'offre
+        in: query
+        name: status
+        type: string
+      - description: Matière enseignée
+        in: query
+        name: subject
+        type: string
+      - description: Niveau d'étude
+        in: query
+        name: level
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.OfferResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste toutes les offres
+      tags:
+      - offers
+    post:
+      consumes:
+      - application/json
+      description: Crée une nouvelle offre
+      parameters:
+      - description: Données de l'offre
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.OfferCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controllers.OfferResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Création d'une offre
+      tags:
+      - offers
+  /api/v1/offers/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Supprime une offre existante
+      parameters:
+      - description: ID de l'offre
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Suppression d'une offre
+      tags:
+      - offers
+    get:
+      consumes:
+      - application/json
+      description: Récupère les détails d'une offre spécifique
+      parameters:
+      - description: ID de l'offre
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.OfferResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Détails d'une offre
+      tags:
+      - offers
+    put:
+      consumes:
+      - application/json
+      description: Met à jour les informations d'une offre existante
+      parameters:
+      - description: ID de l'offre
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Données de mise à jour
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.OfferUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.OfferResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Mise à jour d'une offre
+      tags:
+      - offers
+  /api/v1/offers/{id}/close:
+    put:
+      consumes:
+      - application/json
+      description: Marque une offre comme fermée
+      parameters:
+      - description: ID de l'offre
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.OfferResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Fermeture d'une offre
+      tags:
+      - offers
+  /api/v1/offers/{id}/options:
+    get:
+      consumes:
+      - application/json
+      description: Récupère toutes les options associées à une offre
+      parameters:
+      - description: ID de l'offre
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Option'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des options d'une offre
+      tags:
+      - offers
+  /api/v1/offers/active:
+    get:
+      consumes:
+      - application/json
+      description: Récupère la liste des offres avec le statut 'open'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.OfferResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Liste des offres actives
+      tags:
+      - offers
+  /api/v1/offers/search:
+    get:
+      consumes:
+      - application/json
+      description: Recherche des offres selon différents critères
+      parameters:
+      - description: Terme de recherche
+        in: query
+        name: query
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.OfferResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Recherche d'offres
+      tags:
+      - offers
   /auth/login:
     post:
       consumes:

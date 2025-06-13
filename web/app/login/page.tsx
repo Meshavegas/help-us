@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { apiClient } from '@/lib/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -17,14 +16,22 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await apiClient.login(email, password);
-      
-      if (response.error) {
-        setError(response.error);
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Erreur de connexion');
       } else {
         // Redirection vers le dashboard après connexion réussie
         router.push('/dashboard');
-        router.refresh(); // Rafraîchir pour mettre à jour l'état d'authentification
+        router.refresh();
       }
     } catch (err) {
       setError('Erreur de connexion');

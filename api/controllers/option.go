@@ -27,9 +27,7 @@ type OptionResponse struct {
 // @Param        offer_id       query     int     false  "ID de l'offre"
 // @Success      200  {array}   models.Option
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/options [get]
-
-// ListOptions - GET /api/v1/options
+// @Router      /options [get]
 func ListOptions(c *gin.Context) {
 	var options []models.Option
 	query := database.DB
@@ -63,9 +61,8 @@ func ListOptions(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id} [get]
+// @Router      /options/{id} [get]
 
-// GetOptionByID - GET /api/v1/options/:id
 func GetOptionByID(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -91,9 +88,7 @@ func GetOptionByID(c *gin.Context) {
 // @Success      201  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/options [post]
-
-// CreateOption - POST /api/v1/options
+// @Router      /options [post]
 func CreateOption(c *gin.Context) {
 	var req models.OptionCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -131,9 +126,7 @@ func CreateOption(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id} [put]
-
-// UpdateOption - PUT /api/v1/options/:id
+// @Router      /options/{id} [put]
 func UpdateOption(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -174,9 +167,7 @@ func UpdateOption(c *gin.Context) {
 // @Success      204  {object}  nil
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id} [delete]
-
-// DeleteOption - DELETE /api/v1/options/:id
+// @Router      /options/{id} [delete]
 func DeleteOption(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -198,9 +189,9 @@ func DeleteOption(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id}/accept [put]
+// @Router      /options/{id}/accept [put]
 
-// AcceptOption - PUT /api/v1/options/:id/accept
+// AcceptOption - PUT/options/:id/accept
 func AcceptOption(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -228,9 +219,7 @@ func AcceptOption(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id}/decline [put]
-
-// DeclineOption - PUT /api/v1/options/:id/decline
+// @Router      /options/{id}/decline [put]
 func DeclineOption(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -258,9 +247,7 @@ func DeclineOption(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id}/cancel [put]
-
-// CancelOption - PUT /api/v1/options/:id/cancel
+// @Router      /options/{id}/cancel [put]
 func CancelOption(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -286,9 +273,7 @@ func CancelOption(c *gin.Context) {
 // @Security     BearerAuth
 // @Success      200  {array}   models.Option
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/options/pending [get]
-
-// ListPendingOptions - GET /api/v1/options/pending
+// @Router      /options/pending [get]
 func ListPendingOptions(c *gin.Context) {
 	var options []models.Option
 	database.DB.Where("status = ?", models.OptionStatusActive).Find(&options)
@@ -304,9 +289,7 @@ func ListPendingOptions(c *gin.Context) {
 // @Security     BearerAuth
 // @Success      200  {array}   models.Option
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/options/expiring [get]
-
-// ListExpiringOptions - GET /api/v1/options/expiring
+// @Router      /options/expiring [get]
 func ListExpiringOptions(c *gin.Context) {
 	var options []models.Option
 	now := time.Now()
@@ -326,7 +309,22 @@ func ListExpiringOptions(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id}/reject [put]
+// @Router      /options/{id}/reject [put]
+func RejectOption(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID invalide"})
+		return
+	}
+	var option models.Option
+	if err := database.DB.First(&option, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Option non trouvée"})
+		return
+	}
+	option.Status = models.OptionStatusCancelled
+	database.DB.Save(&option)
+	c.JSON(http.StatusOK, OptionResponse{Option: option})
+}
 
 // ExpireOption godoc
 // @Summary      Expiration d'une option
@@ -339,4 +337,19 @@ func ListExpiringOptions(c *gin.Context) {
 // @Success      200  {object}  OptionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/options/{id}/expire [put]
+// @Router      /options/{id}/expire [put]
+func ExpireOption(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID invalide"})
+		return
+	}
+	var option models.Option
+	if err := database.DB.First(&option, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Option non trouvée"})
+		return
+	}
+	option.Status = models.OptionStatusExpired
+	database.DB.Save(&option)
+	c.JSON(http.StatusOK, OptionResponse{Option: option})
+}

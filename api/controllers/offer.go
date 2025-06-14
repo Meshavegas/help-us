@@ -27,7 +27,7 @@ type OfferResponse struct {
 // @Param        level    query     string  false  "Niveau d'étude"
 // @Success      200  {array}   OfferResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/offers [get]
+// @Router      /offers [get]
 func ListOffers(c *gin.Context) {
 	var offers []models.Offer
 	query := database.DB
@@ -62,7 +62,7 @@ func ListOffers(c *gin.Context) {
 // @Success      200  {object}  OfferResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/offers/{id} [get]
+// @Router      /offers/{id} [get]
 func GetOfferByID(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -88,7 +88,7 @@ func GetOfferByID(c *gin.Context) {
 // @Success      201  {object}  OfferResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/offers [post]
+// @Router      /offers [post]
 func CreateOffer(c *gin.Context) {
 	var req models.OfferCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -124,7 +124,7 @@ func CreateOffer(c *gin.Context) {
 // @Success      200  {object}  OfferResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/offers/{id} [put]
+// @Router      /offers/{id} [put]
 func UpdateOffer(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -177,7 +177,7 @@ func UpdateOffer(c *gin.Context) {
 // @Success      204  {object}  nil
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/offers/{id} [delete]
+// @Router      /offers/{id} [delete]
 func DeleteOffer(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -199,7 +199,7 @@ func DeleteOffer(c *gin.Context) {
 // @Success      200  {array}   models.Option
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/offers/{id}/options [get]
+// @Router      /offers/{id}/options [get]
 func GetOfferOptions(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var options []models.Option
@@ -218,7 +218,7 @@ func GetOfferOptions(c *gin.Context) {
 // @Success      200  {object}  OfferResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/offers/{id}/close [put]
+// @Router      /offers/{id}/close [put]
 func CloseOffer(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -244,7 +244,7 @@ func CloseOffer(c *gin.Context) {
 // @Security     BearerAuth
 // @Success      200  {array}   OfferResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/offers/active [get]
+// @Router      /offers/active [get]
 func ListActiveOffers(c *gin.Context) {
 	var offers []models.Offer
 	database.DB.Where("status = ?", models.OfferStatusOpen).Find(&offers)
@@ -261,7 +261,7 @@ func ListActiveOffers(c *gin.Context) {
 // @Param        query  query     string  false  "Terme de recherche"
 // @Success      200  {array}   OfferResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/offers/search [get]
+// @Router      /offers/search [get]
 func SearchOffers(c *gin.Context) {
 	// Pour l'instant, même logique que ListOffers avec plus de filtres
 	ListOffers(c)

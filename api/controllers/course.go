@@ -27,7 +27,7 @@ type CourseResponse struct {
 // @Param        mission_id     query     int     false  "ID de la mission"
 // @Success      200  {array}   CourseResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/courses [get]
+// @Router       /courses [get]
 func ListCourses(c *gin.Context) {
 	var courses []models.Course
 	query := database.DB
@@ -66,7 +66,7 @@ func ListCourses(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id} [get]
+// @Router       /courses/{id} [get]
 func GetCourseByID(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -92,7 +92,7 @@ func GetCourseByID(c *gin.Context) {
 // @Success      201  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/courses [post]
+// @Router       /courses [post]
 func CreateCourse(c *gin.Context) {
 	var req models.CourseCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -135,7 +135,7 @@ func CreateCourse(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id} [put]
+// @Router       /courses/{id} [put]
 func UpdateCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -182,7 +182,7 @@ func UpdateCourse(c *gin.Context) {
 // @Success      204  {object}  nil
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id} [delete]
+// @Router       /courses/{id} [delete]
 func DeleteCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -208,7 +208,7 @@ func DeleteCourse(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id}/schedule [put]
+// @Router       /courses/{id}/schedule [put]
 func ScheduleCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -239,7 +239,7 @@ func ScheduleCourse(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id}/cancel [put]
+// @Router       /courses/{id}/cancel [put]
 func CancelCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -270,7 +270,7 @@ func CancelCourse(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id}/complete [put]
+// @Router       /courses/{id}/complete [put]
 func CompleteCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -302,7 +302,7 @@ func CompleteCourse(c *gin.Context) {
 // @Success      200  {object}  CourseResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id}/declare [post]
+// @Router       /courses/{id}/declare [post]
 func DeclareCourse(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -342,7 +342,7 @@ func DeclareCourse(c *gin.Context) {
 // @Success      200  {array}   models.Payment
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/courses/{id}/payments [get]
+// @Router       /courses/{id}/payments [get]
 func GetCoursePayments(c *gin.Context) {
 	courseID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {

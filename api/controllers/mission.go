@@ -31,7 +31,7 @@ type MissionResponse struct {
 // @Param        famille_id     query     int     false  "ID de la famille"
 // @Success      200  {array}   MissionResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/missions [get]
+// @Router       /missions [get]
 func ListMissions(c *gin.Context) {
 	var missions []models.Mission
 
@@ -76,7 +76,7 @@ func ListMissions(c *gin.Context) {
 // @Success      200  {object}  MissionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/missions/{id} [get]
+// @Router       /missions/{id} [get]
 func GetMissionByID(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -104,7 +104,7 @@ func GetMissionByID(c *gin.Context) {
 // @Success      201  {object}  MissionResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/missions [post]
+// @Router       /missions [post]
 func CreateMission(c *gin.Context) {
 	var req models.MissionCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -143,7 +143,7 @@ func CreateMission(c *gin.Context) {
 // @Param request body models.MissionUpdateRequest true "Champs à mettre à jour"
 // @Success 200 {object} MissionResponse
 // @Failure 404 {object} map[string]string
-// @Router /api/v1/missions/{id} [put]
+// @Router /missions/{id} [put]
 func UpdateMission(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -193,7 +193,7 @@ func UpdateMission(c *gin.Context) {
 // @Success      204  {object}  nil
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/missions/{id} [delete]
+// @Router       /missions/{id} [delete]
 func DeleteMission(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -271,7 +271,7 @@ func ExtendMission(c *gin.Context) {
 // @Success      200  {array}   models.Course
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/missions/{id}/courses [get]
+// @Router       /missions/{id}/courses [get]
 func GetMissionCourses(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -298,7 +298,7 @@ func GetMissionCourses(c *gin.Context) {
 // @Success      200  {array}   models.Report
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/missions/{id}/reports [get]
+// @Router       /missions/{id}/reports [get]
 func GetMissionReports(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -325,7 +325,7 @@ func GetMissionReports(c *gin.Context) {
 // @Success      200  {array}   models.Payment
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/missions/{id}/payments [get]
+// @Router       /missions/{id}/payments [get]
 func GetMissionPayments(c *gin.Context) {
 	missionID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {

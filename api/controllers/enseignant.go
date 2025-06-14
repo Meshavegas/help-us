@@ -29,7 +29,7 @@ type EnseignantResponse struct {
 // @Security     BearerAuth
 // @Success      200  {array}   EnseignantResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/enseignants [get]
+// @Router       /enseignants [get]
 func ListEnseignants(c *gin.Context) {
 	var users []models.User
 	if err := database.DB.Where("role = ?", models.RoleEnseignant).Find(&users).Error; err != nil {
@@ -56,7 +56,7 @@ func ListEnseignants(c *gin.Context) {
 // @Success      200  {object}  EnseignantResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/enseignants/{id} [get]
+// @Router       /enseignants/{id} [get]
 func GetEnseignantByID(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -94,7 +94,7 @@ func GetEnseignantByID(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      403  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/enseignants [post]
+// @Router       /enseignants [post]
 func CreateEnseignant(c *gin.Context) {
 	if !middleware.IsAdmin(c) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "Accès refusé"})
@@ -147,7 +147,7 @@ func CreateEnseignant(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      403  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/enseignants/{id} [put]
+// @Router       /enseignants/{id} [put]
 func UpdateEnseignant(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -213,7 +213,7 @@ func UpdateEnseignant(c *gin.Context) {
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      204  {object}  nil
 // @Failure      403  {object}  map[string]interface{}
-// @Router       /api/v1/enseignants/{id} [delete]
+// @Router       /enseignants/{id} [delete]
 func DeleteEnseignant(c *gin.Context) {
 	if !middleware.IsAdmin(c) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "Accès refusé"})
@@ -234,7 +234,7 @@ func DeleteEnseignant(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.User
-// @Router       /api/v1/enseignants/{id}/students [get]
+// @Router       /enseignants/{id}/students [get]
 func GetEnseignantStudents(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var familyIDs []uint
@@ -256,7 +256,7 @@ func GetEnseignantStudents(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.Mission
-// @Router       /api/v1/enseignants/{id}/missions [get]
+// @Router       /enseignants/{id}/missions [get]
 func GetEnseignantMissions(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var missions []models.Mission
@@ -273,7 +273,7 @@ func GetEnseignantMissions(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.Course
-// @Router       /api/v1/enseignants/{id}/courses [get]
+// @Router       /enseignants/{id}/courses [get]
 func GetEnseignantCourses(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var courses []models.Course
@@ -290,7 +290,7 @@ func GetEnseignantCourses(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.Payment
-// @Router       /api/v1/enseignants/{id}/payments [get]
+// @Router       /enseignants/{id}/payments [get]
 func GetEnseignantPayments(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var payments []models.Payment
@@ -307,7 +307,7 @@ func GetEnseignantPayments(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.Report
-// @Router       /api/v1/enseignants/{id}/reports [get]
+// @Router       /enseignants/{id}/reports [get]
 func GetEnseignantReports(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var reports []models.Report
@@ -324,7 +324,7 @@ func GetEnseignantReports(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de l'enseignant"
 // @Success      200  {array}   models.Option
-// @Router       /api/v1/enseignants/{id}/options [get]
+// @Router       /enseignants/{id}/options [get]
 func GetEnseignantOptions(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var options []models.Option
@@ -343,7 +343,7 @@ func GetEnseignantOptions(c *gin.Context) {
 // @Param        lng     query     number  true   "Longitude"
 // @Param        radius  query     number  false  "Rayon de recherche en km"
 // @Success      200  {array}   EnseignantResponse
-// @Router       /api/v1/enseignants/nearby [get]
+// @Router       /enseignants/nearby [get]
 func GetEnseignantsNearby(c *gin.Context) {
 	// Stub: renvoie tous les enseignants pour l'instant
 	ListEnseignants(c)

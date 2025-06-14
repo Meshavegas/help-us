@@ -27,7 +27,7 @@ type UserResponse struct {
 // @Success      200  {array}   UserResponse               "Liste des utilisateurs"
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      403  {object}  map[string]interface{}     "Accès refusé"
-// @Router       /api/users [get]
+// @Router       /users [get]
 func GetAllUsers(c *gin.Context) {
 	var users []models.User
 	if err := database.DB.Preload("Addresses").Preload("Payments").Preload("Resources").Find(&users).Error; err != nil {
@@ -76,7 +76,7 @@ func GetAllUsers(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}     "ID invalide"
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      404  {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id} [get]
+// @Router       /users/{id} [get]
 func GetUserByID(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)
@@ -129,7 +129,7 @@ func GetUserByID(c *gin.Context) {
 // @Failure      401     {object}  map[string]interface{}     "Non authentifié"
 // @Failure      403     {object}  map[string]interface{}     "Accès refusé"
 // @Failure      404     {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id} [put]
+// @Router       /users/{id} [put]
 func UpdateUserByID(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)
@@ -212,7 +212,7 @@ func UpdateUserByID(c *gin.Context) {
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      403  {object}  map[string]interface{}     "Accès refusé"
 // @Failure      404  {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id} [delete]
+// @Router       /users/{id} [delete]
 func DeleteUserByID(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)
@@ -258,7 +258,7 @@ func DeleteUserByID(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}     "ID invalide"
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      404  {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id}/addresses [get]
+// @Router       /users/{id}/addresses [get]
 func GetUserAddresses(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)
@@ -295,7 +295,7 @@ func GetUserAddresses(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}     "ID invalide"
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      404  {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id}/payments [get]
+// @Router       /users/{id}/payments [get]
 func GetUserPayments(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)
@@ -332,7 +332,7 @@ func GetUserPayments(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}     "ID invalide"
 // @Failure      401  {object}  map[string]interface{}     "Non authentifié"
 // @Failure      404  {object}  map[string]interface{}     "Utilisateur non trouvé"
-// @Router       /api/users/{id}/resources [get]
+// @Router       /users/{id}/resources [get]
 func GetUserResources(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.ParseUint(userIDParam, 10, 32)

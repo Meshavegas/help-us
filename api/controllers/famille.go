@@ -28,7 +28,7 @@ type FamilleResponse struct {
 // @Security     BearerAuth
 // @Success      200  {array}   FamilleResponse
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/familles [get]
+// @Router       /familles [get]
 func ListFamilles(c *gin.Context) {
 	var users []models.User
 	if err := database.DB.Where("role = ?", models.RoleFamille).Find(&users).Error; err != nil {
@@ -56,7 +56,7 @@ func ListFamilles(c *gin.Context) {
 // @Success      200  {object}  FamilleResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id} [get]
+// @Router       /familles/{id} [get]
 func GetFamilleByID(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -94,7 +94,7 @@ func GetFamilleByID(c *gin.Context) {
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      403  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id} [put]
+// @Router       /familles/{id} [put]
 func UpdateFamille(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -159,7 +159,7 @@ func UpdateFamille(c *gin.Context) {
 // @Param        id   path      int  true  "ID de la famille"
 // @Success      204  {object}  nil
 // @Failure      403  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id} [delete]
+// @Router       /familles/{id} [delete]
 func DeleteFamille(c *gin.Context) {
 	if !middleware.IsAdmin(c) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "Accès refusé"})
@@ -185,7 +185,7 @@ func DeleteFamille(c *gin.Context) {
 // @Security     BearerAuth
 // @Param        id   path      int  true  "ID de la famille"
 // @Success      200  {array}   models.User
-// @Router       /api/v1/familles/{id}/teachers [get]
+// @Router       /familles/{id}/teachers [get]
 func GetFamilleTeachers(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -215,7 +215,7 @@ func GetFamilleTeachers(c *gin.Context) {
 // @Success      200  {array}   models.Mission
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id}/missions [get]
+// @Router       /familles/{id}/missions [get]
 func GetFamilleMissions(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var missions []models.Mission
@@ -234,7 +234,7 @@ func GetFamilleMissions(c *gin.Context) {
 // @Success      200  {array}   models.Course
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id}/courses [get]
+// @Router       /familles/{id}/courses [get]
 func GetFamilleCourses(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var courses []models.Course
@@ -253,7 +253,7 @@ func GetFamilleCourses(c *gin.Context) {
 // @Success      200  {array}   models.Payment
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id}/payments [get]
+// @Router       /familles/{id}/payments [get]
 func GetFamillePayments(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var payments []models.Payment
@@ -273,7 +273,7 @@ func GetFamillePayments(c *gin.Context) {
 // @Success      201  {object}  map[string]interface{}
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id}/reviews [post]
+// @Router       /familles/{id}/reviews [post]
 func PostFamilleReview(c *gin.Context) {
 	c.JSON(http.StatusNotImplemented, gin.H{"message": "Fonctionnalité review non implémentée"})
 }
@@ -289,7 +289,7 @@ func PostFamilleReview(c *gin.Context) {
 // @Success      200  {array}   models.Option
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/familles/{id}/options [get]
+// @Router       /familles/{id}/options [get]
 func GetFamilleOptions(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	var options []models.Option

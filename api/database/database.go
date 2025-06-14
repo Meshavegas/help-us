@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -17,11 +17,21 @@ var DB *gorm.DB
 func InitDatabase() {
 	var err error
 
-	// Récupérer le chemin de la base de données depuis les variables d'environnement
-	dbPath := os.Getenv("DATABASE_PATH")
-	if dbPath == "" {
-		dbPath = "database.db" // Valeur par défaut
+	// Récupérer les informations de connexion depuis les variables d'environnement
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	dbSSLMode := os.Getenv("DB_SSLMODE")
+
+	if dbSSLMode == "" {
+		dbSSLMode = "disable"
 	}
+
+	// Construire la chaîne de connexion PostgreSQL
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		dbHost, dbUser, dbPassword, dbName, dbPort, dbSSLMode)
 
 	// Configuration du logger GORM
 	logLevel := logger.Silent
@@ -29,8 +39,8 @@ func InitDatabase() {
 		logLevel = logger.Info
 	}
 
-	// Connexion à la base de données SQLite
-	DB, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{
+	// Connexion à la base de données PostgreSQL
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logLevel),
 	})
 
@@ -132,7 +142,7 @@ func SeedDatabase() error {
 	// Créer un administrateur par défaut
 	admin := models.User{
 		Username:    "admin",
-		Email:       "admin@example.com",
+		Email:       "mesha@mm.com",
 		Password:    "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password
 		Role:        models.RoleAdministrator,
 		PhoneNumber: "+33123456789",

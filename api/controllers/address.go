@@ -22,9 +22,7 @@ type AddressResponse struct {
 // @Security     BearerAuth
 // @Success      200  {array}   models.Address
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/addresses [get]
-
-// ListAddresses - GET /api/v1/addresses (admin only)
+// @Router       /addresses [get]
 func ListAddresses(c *gin.Context) {
 	var addresses []models.Address
 	if err := database.DB.Find(&addresses).Error; err != nil {
@@ -45,9 +43,7 @@ func ListAddresses(c *gin.Context) {
 // @Success      200  {object}  AddressResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/addresses/{id} [get]
-
-// GetAddressByID - GET /api/v1/addresses/:id
+// @Router       /addresses/{id} [get]
 func GetAddressByID(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -73,9 +69,7 @@ func GetAddressByID(c *gin.Context) {
 // @Success      201  {object}  AddressResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      500  {object}  map[string]interface{}
-// @Router       /api/v1/addresses [post]
-
-// CreateAddress - POST /api/v1/addresses
+// @Router       /addresses [post]
 func CreateAddress(c *gin.Context) {
 	var req models.AddressCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -109,9 +103,7 @@ func CreateAddress(c *gin.Context) {
 // @Success      200  {object}  AddressResponse
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/addresses/{id} [put]
-
-// UpdateAddress - PUT /api/v1/addresses/:id
+// @Router       /addresses/{id} [put]
 func UpdateAddress(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -160,9 +152,7 @@ func UpdateAddress(c *gin.Context) {
 // @Param        id   path      int  true  "ID de l'adresse"
 // @Success      204  {object}  nil
 // @Failure      400  {object}  map[string]interface{}
-// @Router       /api/v1/addresses/{id} [delete]
-
-// DeleteAddress - DELETE /api/v1/addresses/:id
+// @Router       /addresses/{id} [delete]
 func DeleteAddress(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
@@ -186,9 +176,7 @@ func DeleteAddress(c *gin.Context) {
 // @Param        country     query     string  true   "Pays"
 // @Success      200  {object}  map[string]interface{}
 // @Failure      400  {object}  map[string]interface{}
-// @Router       /api/v1/addresses/geocode [get]
-
-// GeocodeAddress - GET /api/v1/addresses/geocode?street=...&city=...&postal_code=...&country=...
+// @Router       /addresses/geocode [get]
 func GeocodeAddress(c *gin.Context) {
 	// Stub: retourne des coordonnées factices
 	c.JSON(http.StatusOK, gin.H{
@@ -210,9 +198,7 @@ func GeocodeAddress(c *gin.Context) {
 // @Success      200  {object}  map[string]interface{}
 // @Failure      400  {object}  map[string]interface{}
 // @Failure      404  {object}  map[string]interface{}
-// @Router       /api/v1/addresses/route [get]
-
-// CalculateRoute - GET /api/v1/addresses/route?origin_id=...&destination_id=...
+// @Router       /addresses/route [get]
 func CalculateRoute(c *gin.Context) {
 	originID, _ := strconv.ParseUint(c.Query("origin_id"), 10, 32)
 	destID, _ := strconv.ParseUint(c.Query("destination_id"), 10, 32)

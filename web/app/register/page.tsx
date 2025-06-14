@@ -260,49 +260,49 @@ export default function RegisterPage() {
         {/* Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
+          {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
-
+              {error}
+            </div>
+          )}
+          
             {/* Informations de base */}
-            <div className="space-y-4">
+          <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Informations personnelles</h3>
               
               <div className="grid md:grid-cols-2 gap-4">
-                <div>
+            <div>
                   <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                     Nom d'utilisateur *
-                  </label>
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    required
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    value={formData.username}
-                    onChange={handleChange}
-                  />
-                </div>
-                
-                <div>
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Adresse email *
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
+                value={formData.email}
+                onChange={handleChange}
+              />
                 </div>
-              </div>
+            </div>
 
-              <div>
+            <div>
                 <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700 mb-1">
                   Téléphone
                 </label>
@@ -320,17 +320,17 @@ export default function RegisterPage() {
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                     Mot de passe *
-                  </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </div>
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
                 
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
@@ -445,9 +445,9 @@ export default function RegisterPage() {
                     value={formData.children_ages}
                     onChange={handleChange}
                   />
-                </div>
-                
-                <div>
+          </div>
+
+          <div>
                   <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
                     Adresse
                   </label>
@@ -492,24 +492,24 @@ export default function RegisterPage() {
 
             <div className="pt-6">
               <Button 
-                type="submit" 
-                disabled={loading}
+              type="submit"
+              disabled={loading}
                 className={`w-full bg-${config?.color}-600 hover:bg-${config?.color}-700`}
                 size="lg"
-              >
+            >
                 {loading ? 'Inscription en cours...' : 'Créer mon compte'}
               </Button>
-            </div>
+          </div>
 
             <div className="text-center pt-4">
               <Link 
-                href="/login" 
+              href="/login"
                 className="text-indigo-600 hover:text-indigo-700 font-medium"
-              >
-                Déjà un compte ? Se connecter
+            >
+              Déjà un compte ? Se connecter
               </Link>
-            </div>
-          </form>
+          </div>
+        </form>
         </div>
       </div>
     </div>

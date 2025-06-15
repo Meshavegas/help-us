@@ -4,6 +4,7 @@ import (
 	"api/database"
 	"api/models"
 	"api/utils"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -148,7 +149,9 @@ func Login(c *gin.Context) {
 
 	// Rechercher l'utilisateur par email
 	var user models.User
-	if err := database.DB.Where("email = ?", req.Email).First(&user).Error; err != nil {
+	err := database.DB.Where("email = ?", req.Email).First(&user).Error
+	if err != nil {
+		fmt.Println("Error finding user:", err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Email ou mot de passe incorrect"})
 		return
 	}
@@ -161,6 +164,7 @@ func Login(c *gin.Context) {
 
 	// Vérifier le mot de passe
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		fmt.Println("Error comparing passwords:", err, user.Password, req.Password)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Email ou mot de passe incorrect"})
 		return
 	}

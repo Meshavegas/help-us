@@ -51,7 +51,7 @@ func GetAddressByID(c *gin.Context) {
 		return
 	}
 	var address models.Address
-	if err := database.DB.First(&address, id).Error; err != nil {
+	if err := database.DB.Preload("User").First(&address, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Adresse non trouvée"})
 		return
 	}

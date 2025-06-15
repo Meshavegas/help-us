@@ -74,7 +74,7 @@ func GetCourseByID(c *gin.Context) {
 		return
 	}
 	var course models.Course
-	if err := database.DB.Preload("Payments").First(&course, courseID).Error; err != nil {
+	if err := database.DB.Preload("Payments").Preload("Address").Preload("Enseignant").Preload("Famille").Preload("Mission").First(&course, courseID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Cours non trouvé"})
 		return
 	}
